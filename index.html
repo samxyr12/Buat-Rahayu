@@ -792,19 +792,22 @@ for (let i=0;i<35;i++) bgParticles.push({
 const guideArrow = document.getElementById('guideArrow');
 const guideLabel = document.getElementById('guideLabel');
 
+// Steps are indexed 0–8. Each must be completed IN ORDER before next arrow shows.
 const guideSteps = [
-  { id: 'cardHeart',     label: 'Mulai — klik hati ini! 💖' },
-  { id: 'cardMeter',     label: 'Lihat love meter di sini 💗' },
-  { id: 'cardLetter',    label: 'Buka surat rahasianya 📜' },
-  { id: 'cardGallery',   label: 'Klik momen-momen kita 🌸' },
-  { id: 'cardQuestion',  label: 'Jawab pertanyaannya ya 💬' },
-  { id: 'cardReactions', label: 'Pilih reaksimu ✨' },
-  { id: 'cardGame',      label: 'Main game dulu! 🎮' },
-  { id: 'cardCountdown', label: 'Lihat hitungan waktu ⏳' },
-  { id: 'cardSend',      label: 'Kirim suratnya sekarang! 💌' },
+  { id: 'cardHeart',     label: 'Langkah 1 — Klik hati sampai penuh! 💖' },
+  { id: 'cardLetter',    label: 'Langkah 2 — Buka surat rahasianya 📜' },
+  { id: 'cardGallery',   label: 'Langkah 3 — Buka semua kenangan kita 🌸' },
+  { id: 'cardQuestion',  label: 'Langkah 4 — Jawab pertanyaannya ya 💬' },
+  { id: 'cardReactions', label: 'Langkah 5 — Pilih reaksimu ✨' },
+  { id: 'cardGame',      label: 'Langkah 6 — Main game sampai selesai! 🎮' },
+  { id: 'cardCountdown', label: 'Langkah 7 — Lihat hitungan waktu kita ⏳' },
+  { id: 'cardSend',      label: 'Langkah 8 — Kirim suratnya sekarang! 💌' },
 ];
 
+// currentStep = index of the step we are CURRENTLY waiting on (0-based)
 let currentStep = 0;
+// completedSteps[i] = true means step i has been finished
+const completedSteps = new Array(guideSteps.length).fill(false);
 let guideTimeout;
 
 function showGuideFor(stepIdx) {
@@ -818,7 +821,7 @@ function showGuideFor(stepIdx) {
   const rect = el.getBoundingClientRect();
   const arrowH = 80;
   const top = window.scrollY + rect.top - arrowH - 16;
-  const left = window.scrollX + rect.left + rect.width/2;
+  const left = window.scrollX + rect.left + rect.width / 2;
 
   guideLabel.textContent = step.label;
   guideArrow.style.left = left + 'px';
@@ -827,20 +830,28 @@ function showGuideFor(stepIdx) {
   guideArrow.classList.add('visible');
 }
 
-// show guide on step complete
-function advanceGuide(stepIdx) {
-  currentStep = Math.max(currentStep, stepIdx + 1);
+/**
+ * Call this when step `stepIdx` is completed.
+ * Only advances if stepIdx === currentStep (correct order).
+ */
+function completeStep(stepIdx) {
+  // Ignore if this step was already completed or it's out of order
+  if (stepIdx !== currentStep) return;
+  if (completedSteps[stepIdx]) return;
+
+  completedSteps[stepIdx] = true;
+  currentStep = stepIdx + 1;
+  updateProgress();
+
   clearTimeout(guideTimeout);
   guideTimeout = setTimeout(() => {
     showGuideFor(currentStep);
-    // scroll to next card
     const next = guideSteps[currentStep];
     if (next) {
       const el = document.getElementById(next.id);
-      if (el) el.scrollIntoView({behavior:'smooth', block:'center'});
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-  }, 600);
-  updateProgress();
+  }, 700);
 }
 
 function updateProgress() {
@@ -848,7 +859,7 @@ function updateProgress() {
   document.getElementById('progressFill').style.width = pct + '%';
 }
 
-// Show first guide after short delay
+// Show first guide after page loads
 setTimeout(() => showGuideFor(0), 1800);
 </script>
 
@@ -920,9 +931,9 @@ function heartClick(e) {
     heartDone = true;
     document.getElementById('bigHeart').textContent = '💞';
     showToast('💖 Rahayu, perasaan ini nyata dan tulus untukmu.');
-    advanceGuide(0); // done step 1 → go to step 2
+    completeStep(0); // step 0 done → show arrow to letter
   }
-  if (loveLevel === 5) advanceGuide(1); // prompt to letter after halfway
+  // Remove the mid-way advanceGuide call entirely
 }
 </script>
 
@@ -957,7 +968,7 @@ function revealLetter() {
   function typeNext() {
     if(idx>=letterParagraphs.length){
       showToast('Surat sudah terkirim sampai ke hatimu 💌');
-      advanceGuide(2); // go to step 3 → gallery
+      completeStep(1); // step 1 done → show arrow to gallery
       return;
     }
     const l=letterParagraphs[idx++];
@@ -970,11 +981,12 @@ function revealLetter() {
 <!-- ============ MEMORY GALLERY ============ -->
 <script>
 let memoryClicks = 0;
+const totalMemories = 6;
+let memoryOpened = new Set();
 
 function toggleMemory(card, idx) {
   const txt = card.querySelector('.memory-text');
   const isOpen = card.classList.contains('open');
-  // close all
   document.querySelectorAll('.memory-card').forEach(c => {
     c.classList.remove('open');
     c.querySelector('.memory-text').style.display='none';
@@ -983,9 +995,11 @@ function toggleMemory(card, idx) {
     card.classList.add('open');
     txt.style.display='block';
     spawnHearts(card.getBoundingClientRect().left+card.offsetWidth/2, card.getBoundingClientRect().top, 4);
+    memoryOpened.add(idx);
   }
-  memoryClicks++;
-  if (memoryClicks >= 3) advanceGuide(3); // step 3 → question
+  if (memoryOpened.size >= totalMemories) {
+    completeStep(2); // step 2 done → show arrow to question
+  }
 }
 </script>
 
@@ -1007,7 +1021,7 @@ function chooseAnswer(btn, idx) {
   spawnHearts(btn.getBoundingClientRect().left+btn.offsetWidth/2, btn.getBoundingClientRect().top, 5);
   if (!answered) {
     answered = true;
-    advanceGuide(4); // step 4 → reactions
+    completeStep(3); // step 3 done → show arrow to reactions
   }
 }
 </script>
@@ -1023,7 +1037,9 @@ function react(btn, emoji, msg) {
   showToast(emoji+' '+msg);
   spawnHearts(btn.getBoundingClientRect().left+btn.offsetWidth/2, btn.getBoundingClientRect().top, 4);
   reactCount++;
-  if (reactCount >= 2) advanceGuide(5); // step 5 → game
+  if (reactCount >= 1) {
+    completeStep(4); // step 4 done → show arrow to game
+  }
 }
 </script>
 
@@ -1154,7 +1170,7 @@ function endGame(){
   gctx.font='13px DM Sans'; gctx.fillStyle='rgba(244,165,181,.8)';
   gctx.fillText(msg,gc.width/2,gc.height/2+36);
   showToast('Game selesai! Skor: '+gameScore+' 🎉');
-  if(!gameCompleted){ gameCompleted=true; advanceGuide(6); }
+  if(!gameCompleted){ gameCompleted=true; completeStep(5); } // step 5 done → countdown
 }
 
 function resetGame(){
@@ -1192,12 +1208,15 @@ function updateCountdown(){
   document.getElementById('cdMins').textContent=String(mins).padStart(2,'0');
   document.getElementById('cdSecs').textContent=String(secs).padStart(2,'0');
 }
-updateCountdown(); setInterval(updateCountdown,1000);
+updateCountdown(); setInterval(updateCountdown, 1000);
 
-// Advance guide once seen
-const cdObs = new IntersectionObserver(entries=>{
-  if(entries[0].isIntersecting){ advanceGuide(7); cdObs.disconnect(); }
-},{threshold:0.5});
+// Complete step 6 when countdown card is scrolled into view (only after step 5 game done)
+const cdObs = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting) {
+    completeStep(6); // step 6 done → show arrow to send
+    cdObs.disconnect();
+  }
+}, { threshold: 0.6 });
 cdObs.observe(document.getElementById('cardCountdown'));
 </script>
 
@@ -1255,7 +1274,7 @@ function sendLetter(){
     document.getElementById('completionOverlay').style.display='flex';
   }, 1800);
 
-  advanceGuide(8);
+  completeStep(7); // all done!
 }
 
 let waUrl_global='', smsUrl_global='';
