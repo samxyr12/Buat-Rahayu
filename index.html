@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Rahayu 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --rose: #e8637a;
+  --blush: #f4a5b5;
+  --gold: #d4af6b;
+  --gold-light: #f5e6c4;
+  --ivory: #fdf6f0;
+  --deep: #1c0a13;
+  --mid: #2e1221;
+  --velvet: #5c1a38;
+  --muted: #c8899f;
+  --glass: rgba(255,255,255,0.06);
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--deep);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ====== STARS & BG ====== */
+#bgCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.star {
+  position: fixed; border-radius: 50%; background: white;
+  animation: twinkle var(--d,3s) ease-in-out infinite; opacity: 0;
+}
+@keyframes twinkle {
+  0%,100%{opacity:0;transform:scale(.5)} 50%{opacity:.8;transform:scale(1.3)}
+}
+
+/* ====== GUIDE ARROW ====== */
+#guideArrow {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  opacity: 0;
+}
+#guideArrow.visible { opacity: 1; }
+.guide-label {
+  background: linear-gradient(135deg, var(--rose), var(--velvet));
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(232,99,122,0.5);
+  letter-spacing: 0.3px;
+  margin-bottom: 6px;
+  animation: labelPulse 1.5s ease-in-out infinite;
+}
+@keyframes labelPulse {
+  0%,100%{ transform:scale(1); box-shadow:0 4px 20px rgba(232,99,122,.5); }
+  50%{ transform:scale(1.04); box-shadow:0 6px 28px rgba(232,99,122,.8); }
+}
+.guide-arrow-svg {
+  animation: arrowBounce 0.8s ease-in-out infinite;
+  filter: drop-shadow(0 2px 8px rgba(232,99,122,.7));
+}
+@keyframes arrowBounce {
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(10px); }
+}
+
+/* ====== MUSIC BTN ====== */
+#musicBtn {
+  position: fixed; top: 18px; right: 18px; z-index: 200;
+  background: rgba(92,26,56,0.7);
+  border: 1px solid rgba(232,99,122,0.4);
+  border-radius: 40px; padding: 9px 18px;
+  color: var(--blush); font-family: 'DM Sans', sans-serif;
+  font-weight: 600; font-size: 0.8rem; cursor: pointer;
+  display: flex; align-items: center; gap: 7px;
+  backdrop-filter: blur(14px); transition: all 0.3s;
+}
+#musicBtn:hover { background: rgba(232,99,122,0.3); color: white; }
+#musicBtn .note { animation: noteBounce 0.5s ease-in-out infinite alternate; }
+@keyframes noteBounce { from{transform:translateY(0)} to{transform:translateY(-4px)} }
+
+/* ====== APP ====== */
+#app {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column;
+  align-items: center; padding: 20px 16px 40px;
+  min-height: 100vh;
+}
+
+/* ====== HEADER ====== */
+.header {
+  text-align: center; margin: 40px 0 24px;
+  animation: fadeDown 1.2s ease both;
+}
+.header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.2rem, 8vw, 4.4rem);
+  color: var(--gold);
+  text-shadow: 0 0 40px rgba(212,175,107,0.4), 0 0 80px rgba(212,175,107,0.2);
+  letter-spacing: 1px; font-weight: 600;
+}
+.header-sub {
+  color: var(--muted); font-size: 0.82rem;
+  margin-top: 10px; letter-spacing: 4px;
+  text-transform: uppercase; font-weight: 500;
+}
+@keyframes fadeDown {
+  from{opacity:0;transform:translateY(-28px)} to{opacity:1;transform:translateY(0)}
+}
+
+/* ====== CARD ====== */
+.card {
+  background: var(--glass);
+  border: 1px solid rgba(232,99,122,0.2);
+  border-radius: 20px; backdrop-filter: blur(16px);
+  padding: 28px; margin: 10px 0;
+  width: 100%; max-width: 680px;
+  animation: fadeUp 0.8s ease both;
+  position: relative;
+}
+@keyframes fadeUp {
+  from{opacity:0;transform:translateY(36px)} to{opacity:1;transform:translateY(0)}
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem; color: var(--gold);
+  text-align: center; margin-bottom: 18px;
+  letter-spacing: 0.5px; font-weight: 600;
+}
+
+/* ====== STEP BADGE ====== */
+.step-badge {
+  position: absolute; top: -12px; left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--rose), var(--velvet));
+  color: white; font-size: 0.7rem; font-weight: 700;
+  padding: 3px 14px; border-radius: 20px; letter-spacing: 1px;
+  text-transform: uppercase; white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(232,99,122,.4);
+}
+
+/* ====== HEART BUTTON ====== */
+.heart-section { display:flex; flex-direction:column; align-items:center; animation-delay:0.2s; }
+#bigHeart {
+  font-size: 5.5rem; cursor: pointer;
+  filter: drop-shadow(0 0 24px rgba(232,99,122,.6));
+  animation: heartbeat 1.8s ease-in-out infinite;
+  user-select: none; display: block; text-align: center;
+  transition: filter 0.3s;
+}
+@keyframes heartbeat {
+  0%,100%{transform:scale(1)} 14%{transform:scale(1.18)} 28%{transform:scale(1)} 42%{transform:scale(1.1)} 56%{transform:scale(1)}
+}
+#bigHeart:active { transform: scale(0.88); }
+.heart-hint { color:var(--muted); font-size:0.82rem; margin-top:10px; }
+
+/* ====== LOVE METER ====== */
+.love-meter-wrap { animation-delay: 0.35s; }
+.lm-label {
+  color: var(--muted); font-size: 0.78rem; text-align: center;
+  margin-bottom: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600;
+}
+.lm-bar {
+  height: 20px; background: rgba(255,255,255,0.08);
+  border-radius: 10px; overflow: hidden;
+  border: 1px solid rgba(232,99,122,0.3);
+}
+.lm-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, #c2185b, #e8637a, #d4af6b);
+  border-radius: 10px; transition: width 0.45s cubic-bezier(.34,1.56,.64,1);
+  position: relative; overflow: hidden;
+}
+.lm-fill::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);
+  animation: shine 2s ease-in-out infinite;
+}
+@keyframes shine { from{transform:translateX(-120%)} to{transform:translateX(120%)} }
+.lm-text {
+  text-align: center; margin-top: 12px; font-size: 0.95rem;
+  font-weight: 600; color: var(--gold); min-height: 22px;
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 1.1rem;
+}
+
+/* ====== LOVE LETTER ====== */
+.letter-wrap { animation-delay: 0.5s; }
+#letterReveal {
+  cursor: pointer;
+  background: rgba(232,99,122,0.08);
+  border: 1px dashed rgba(232,99,122,0.35);
+  border-radius: 14px; padding: 28px 20px;
+  text-align: center; color: var(--blush);
+  font-size: 0.9rem; transition: all 0.3s;
+}
+#letterReveal:hover { background:rgba(232,99,122,.18); border-color:var(--rose); }
+#letterReveal .envelope { font-size: 3rem; margin-bottom: 12px; display:block; animation:sway 3s ease-in-out infinite; }
+@keyframes sway { 0%,100%{transform:rotate(-4deg)} 50%{transform:rotate(4deg)} }
+#letterContent {
+  display: none; color: #f0d4dc;
+  line-height: 2; font-size: 0.97rem;
+}
+.letter-p { margin-bottom: 14px; }
+.letter-close {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; color: var(--gold);
+  font-size: 1.1rem; margin-top: 18px;
+  display: block;
+}
+
+/* ====== MEMORY GALLERY ====== */
+.gallery-wrap { animation-delay: 0.6s; }
+.memory-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.memory-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(232,99,122,.2);
+  border-radius: 14px; padding: 16px 12px;
+  text-align: center; cursor: pointer;
+  transition: all 0.3s;
+}
+.memory-card:hover {
+  background: rgba(232,99,122,.15);
+  border-color: var(--rose);
+  transform: translateY(-3px);
+}
+.memory-icon { font-size: 2rem; display: block; margin-bottom: 8px; }
+.memory-label { color: var(--muted); font-size: 0.72rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+.memory-text { color: #f0d4dc; font-size: 0.82rem; margin-top: 6px; line-height: 1.5; display: none; }
+
+/* ====== REACTIONS ====== */
+.reactions-wrap { animation-delay: 0.65s; }
+.rg {
+  display: flex; flex-wrap: wrap; gap: 9px; justify-content: center;
+}
+.rbtn {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(232,99,122,.25);
+  border-radius: 40px; padding: 9px 16px;
+  cursor: pointer; display: flex; align-items: center;
+  gap: 6px; transition: all 0.22s; color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem; font-weight: 600;
+}
+.rbtn:hover, .rbtn.active {
+  background: rgba(232,99,122,.28);
+  border-color: var(--rose); color: white;
+  transform: translateY(-2px);
+}
+.rbtn .ico { font-size: 1.2rem; }
+.rcount {
+  background: rgba(255,255,255,0.12);
+  border-radius: 12px; padding: 1px 7px;
+  font-size: 0.75rem;
+}
+
+/* ====== QUESTION FOR HER ====== */
+.question-wrap { animation-delay: 0.7s; }
+.question-box {
+  text-align: center; padding: 10px 0;
+}
+.q-text {
+  color: #f0d4dc; font-size: 1rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-size: 1.15rem;
+  margin-bottom: 18px; line-height: 1.7;
+}
+.q-options { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.q-btn {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(232,99,122,.3);
+  border-radius: 30px; padding: 10px 20px;
+  cursor: pointer; color: var(--blush);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem; font-weight: 600;
+  transition: all 0.25s;
+}
+.q-btn:hover { background: rgba(232,99,122,.25); color:white; transform:scale(1.04); }
+.q-btn.chosen {
+  background: linear-gradient(135deg,var(--rose),var(--velvet));
+  color: white; border-color: transparent;
+  box-shadow: 0 4px 16px rgba(232,99,122,.5);
+}
+#qAnswer {
+  margin-top: 14px; color: var(--gold);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-size: 1.05rem;
+  min-height: 26px; transition: all .3s;
+}
+
+/* ====== GAME ====== */
+.game-wrap { animation-delay: 0.8s; }
+.game-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px;
+}
+.game-title-text {
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--gold); font-size: 1.1rem;
+}
+.game-meta {
+  color: var(--muted); font-size: 0.82rem; font-weight: 600;
+  background: rgba(232,99,122,.12); border-radius:20px;
+  padding: 4px 12px; border: 1px solid rgba(232,99,122,.25);
+}
+#gameCanvas {
+  width: 100%; height: 280px;
+  background: rgba(0,0,0,.4);
+  border-radius: 14px; border: 1px solid rgba(232,99,122,.25);
+  display: block; cursor: none;
+}
+.game-controls { display:flex; justify-content:center; gap:9px; margin-top:11px; flex-wrap:wrap; }
+.gbtn {
+  background: rgba(232,99,122,.18);
+  border: 1px solid var(--rose);
+  border-radius: 40px; padding: 8px 22px;
+  color: var(--blush); font-family:'DM Sans',sans-serif;
+  font-weight:600; font-size:0.82rem; cursor:pointer; transition:all .2s;
+}
+.gbtn:hover { background:rgba(232,99,122,.4); color:white; }
+.gbtn.mode-btn { border-color:var(--gold); color:var(--gold-light); background:rgba(212,175,107,.12); }
+.gbtn.mode-btn:hover { background:rgba(212,175,107,.3); }
+.game-hint { text-align:center; color:var(--muted); font-size:0.75rem; margin-top:9px; opacity:.75; }
+#highScore { color:var(--gold); font-weight:600; }
+
+/* ====== COUNTDOWN ====== */
+.countdown-wrap { animation-delay: 0.9s; }
+.countdown-display {
+  display: flex; gap: 14px; justify-content: center;
+  flex-wrap: wrap; margin-top: 6px;
+}
+.cd-block {
+  text-align: center;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(212,175,107,.2);
+  border-radius: 14px; padding: 14px 18px; min-width: 72px;
+}
+.cd-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem; color: var(--gold);
+  font-weight: 600; line-height: 1;
+}
+.cd-lbl {
+  color: var(--muted); font-size: 0.68rem;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-top: 4px; font-weight: 600;
+}
+
+/* ====== SEND LETTER (FINAL) ====== */
+.send-wrap { animation-delay: 1s; }
+.send-inner { text-align: center; }
+.send-desc {
+  color: #f0d4dc; font-size: 0.9rem;
+  line-height: 1.7; margin-bottom: 22px;
+}
+.contact-select-area { margin-bottom: 20px; }
+.contact-label {
+  color: var(--muted); font-size: 0.76rem;
+  text-transform: uppercase; letter-spacing: 2px;
+  font-weight: 600; margin-bottom: 10px;
+}
+.contact-list {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+}
+.contact-chip {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(232,99,122,.3);
+  border-radius: 30px; padding: 8px 16px;
+  cursor: pointer; color: var(--blush);
+  font-size: 0.82rem; font-weight: 600;
+  transition: all .22s;
+}
+.contact-chip:hover { background:rgba(232,99,122,.2); color:white; }
+.contact-chip.selected {
+  background: linear-gradient(135deg,var(--rose),var(--velvet));
+  color:white; border-color:transparent;
+  box-shadow: 0 4px 16px rgba(232,99,122,.5);
+}
+.send-btn-big {
+  background: linear-gradient(135deg, var(--rose), #9c1a50);
+  border: none; border-radius: 50px;
+  padding: 14px 40px; cursor: pointer;
+  color: white; font-family:'DM Sans',sans-serif;
+  font-size: 1rem; font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: 0 8px 32px rgba(232,99,122,.5);
+  transition: all .3s;
+  display: inline-flex; align-items:center; gap: 10px;
+}
+.send-btn-big:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(232,99,122,.7); }
+.send-result {
+  margin-top: 18px; color: var(--gold);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-size: 1.1rem;
+  display: none; animation: fadeUp .5s ease;
+}
+
+/* ====== FLOATING ====== */
+.float-heart {
+  position: fixed; pointer-events: none;
+  animation: floatUp 2.8s ease-out forwards; z-index: 999;
+}
+@keyframes floatUp {
+  0%{opacity:1;transform:translateY(0) scale(1) rotate(0deg)}
+  100%{opacity:0;transform:translateY(-220px) scale(0.2) rotate(25deg)}
+}
+.spark {
+  position: fixed; pointer-events: none;
+  width: 5px; height: 5px; border-radius: 50%;
+  z-index: 998; animation: spark var(--dur,.8s) ease-out forwards;
+}
+@keyframes spark {
+  0%{opacity:1;transform:translate(0,0) scale(1)}
+  100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(0)}
+}
+
+/* ====== TOAST ====== */
+#toast {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: rgba(92,26,56,0.95);
+  color: white; padding: 11px 24px;
+  border-radius: 40px; font-family:'DM Sans',sans-serif;
+  font-weight: 600; font-size: 0.85rem;
+  z-index: 1000; transition: transform .4s, opacity .4s;
+  opacity: 0; text-align: center; pointer-events: none;
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(232,99,122,.4);
+  box-shadow: 0 8px 32px rgba(0,0,0,.4);
+  max-width: 90vw;
+}
+#toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* ====== COMPLETION OVERLAY ====== */
+#completionOverlay {
+  position: fixed; inset:0; z-index: 5000;
+  background: rgba(28,10,19,0.97);
+  display: flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  text-align:center; padding: 30px;
+  display: none;
+}
+.co-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem,7vw,3.5rem);
+  color: var(--gold); margin-bottom: 16px;
+  animation: fadeDown .8s ease;
+}
+.co-sub {
+  color: var(--blush); font-size: 1rem;
+  line-height: 1.8; max-width: 420px;
+  margin-bottom: 30px; animation: fadeUp .8s ease;
+}
+.co-action-row {
+  display: flex; flex-wrap:wrap; gap: 12px;
+  justify-content: center;
+}
+.co-btn {
+  padding: 12px 28px; border-radius: 40px;
+  font-family: 'DM Sans',sans-serif; font-weight:700;
+  font-size: 0.9rem; cursor:pointer; transition:all .3s;
+}
+.co-btn-primary {
+  background: linear-gradient(135deg,var(--rose),var(--velvet));
+  color:white; border:none;
+  box-shadow: 0 8px 28px rgba(232,99,122,.5);
+}
+.co-btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 36px rgba(232,99,122,.7); }
+.co-btn-secondary {
+  background: transparent; color: var(--gold);
+  border: 1px solid var(--gold);
+}
+.co-btn-secondary:hover { background: rgba(212,175,107,.15); }
+
+/* ====== FOOTER ====== */
+.footer {
+  text-align: center; color: rgba(232,99,122,0.3);
+  font-size: 0.72rem; padding: 30px 0 20px;
+  letter-spacing: 3px; text-transform: uppercase;
+}
+
+/* ====== PROGRESS DOTS ====== */
+.progress-bar {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 3px; background: rgba(255,255,255,.06); z-index: 300;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--rose), var(--gold));
+  transition: width .5s ease;
+  width: 0%;
+}
+
+@media (max-width: 480px) {
+  .memory-cards { grid-template-columns: repeat(3,1fr); }
+  .countdown-display { gap: 8px; }
+  .cd-block { padding: 10px 12px; min-width: 60px; }
+  .cd-num { font-size: 1.6rem; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+<div id="toast"></div>
+
+<!-- Progress bar -->
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- Guide Arrow -->
+<div id="guideArrow">
+  <div class="guide-label" id="guideLabel">Mulai dari sini ✨</div>
+  <svg class="guide-arrow-svg" width="32" height="40" viewBox="0 0 32 40" fill="none">
+    <path d="M16 2 L16 32 M6 22 L16 34 L26 22" stroke="#e8637a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div>
+
+<!-- Music Button -->
+<button id="musicBtn" onclick="toggleMusic()">
+  <span class="note">♪</span>
+  <span id="musicLabel">Putar Musik</span>
+</button>
+
+<!-- Completion Overlay -->
+<div id="completionOverlay">
+  <div style="font-size:5rem; margin-bottom:20px; animation:heartbeat 1.5s infinite;">💌</div>
+  <div class="co-title">Pesan Sudah Terkirim 🌹</div>
+  <div class="co-sub">
+    Surat ini sudah disiapkan dengan sepenuh hati.<br>
+    Semoga setiap kata yang kamu baca terasa hangat dan tulus, seperti rasa yang ada di sini untukmu.
+  </div>
+  <div class="co-action-row">
+    <button class="co-btn co-btn-primary" onclick="sendViaWhatsApp()">📱 Kirim via WhatsApp</button>
+    <button class="co-btn co-btn-primary" onclick="sendViaSMS()">💬 Kirim via SMS</button>
+    <button class="co-btn co-btn-secondary" onclick="closeCompletion()">Tutup</button>
+  </div>
+</div>
+
+<div id="app">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>✨ Untuk Rahayu ✨</h1>
+    <p class="header-sub">Sebuah pesan dari hati yang tulus</p>
+  </div>
+
+  <!-- STEP 1: HEART -->
+  <div class="card heart-section" id="cardHeart" style="animation-delay:0.1s">
+    <div class="step-badge">Langkah 1 — Buka Hatimu</div>
+    <div id="bigHeart" onclick="heartClick(event)" title="Klik untuk merasakannya">💖</div>
+    <p class="heart-hint">Klik hati ini berkali-kali untuk mengisi love meter ❤️</p>
+  </div>
+
+  <!-- STEP 2: LOVE METER -->
+  <div class="card love-meter-wrap" id="cardMeter" style="animation-delay:0.25s">
+    <div class="step-badge">Langkah 2 — Seberapa Besar?</div>
+    <p class="lm-label">💗 Meter Perasaan</p>
+    <div class="lm-bar"><div class="lm-fill" id="loveBar"></div></div>
+    <p class="lm-text" id="loveMeterText">Klik hati di atas dulu ya...</p>
+  </div>
+
+  <!-- STEP 3: LETTER -->
+  <div class="card letter-wrap" id="cardLetter" style="animation-delay:0.4s">
+    <div class="step-badge">Langkah 3 — Baca Suratnya</div>
+    <p class="section-title">💌 Surat Untukmu</p>
+    <div id="letterReveal" onclick="revealLetter()">
+      <span class="envelope">📜</span>
+      <div style="font-weight:600; margin-bottom:6px;">Ada surat yang sudah lama ingin aku berikan.</div>
+      <div style="opacity:.7; font-size:0.85rem;">Klik untuk membuka pesan ini...</div>
+    </div>
+    <div id="letterContent">
+      <p class="letter-p" id="lp1"></p>
+      <p class="letter-p" id="lp2"></p>
+      <p class="letter-p" id="lp3"></p>
+      <p class="letter-p" id="lp4"></p>
+      <p class="letter-p" id="lp5"></p>
+      <span class="letter-close" id="lp6"></span>
+    </div>
+  </div>
+
+  <!-- STEP 4: MEMORY GALLERY -->
+  <div class="card gallery-wrap" id="cardGallery" style="animation-delay:0.5s">
+    <div class="step-badge">Langkah 4 — Kenangan Kita</div>
+    <p class="section-title">🌸 Momen yang Berharga</p>
+    <div class="memory-cards" id="memoryCards">
+      <div class="memory-card" onclick="toggleMemory(this, 0)">
+        <span class="memory-icon">🌅</span>
+        <div class="memory-label">Awal Kita</div>
+        <div class="memory-text">Hari pertama aku sadar kamu ada di hidupku, dan rasanya dunia jadi lebih terang dari biasanya.</div>
+      </div>
+      <div class="memory-card" onclick="toggleMemory(this, 1)">
+        <span class="memory-icon">😂</span>
+        <div class="memory-label">Tawa Bersama</div>
+        <div class="memory-text">Cara kamu tertawa adalah hal yang paling aku suka. Terasa lepas, jujur, dan bikin aku ikut bahagia.</div>
+      </div>
+      <div class="memory-card" onclick="toggleMemory(this, 2)">
+        <span class="memory-icon">🌙</span>
+        <div class="memory-label">Malam Tenang</div>
+        <div class="memory-text">Malam-malam ketika kita ngobrol panjang tanpa sadar sudah lewat tengah malam, dan aku tidak mau berhenti.</div>
+      </div>
+      <div class="memory-card" onclick="toggleMemory(this, 3)">
+        <span class="memory-icon">🤝</span>
+        <div class="memory-label">Saling Dukung</div>
+        <div class="memory-text">Di momen-momen sulitku, kamu ada. Tidak perlu banyak kata, tapi kehadiranmu sudah lebih dari cukup.</div>
+      </div>
+      <div class="memory-card" onclick="toggleMemory(this, 4)">
+        <span class="memory-icon">🎶</span>
+        <div class="memory-label">Lagu Kita</div>
+        <div class="memory-text">Ada lagu yang selalu mengingatkanku padamu, dan setiap kali dengar, rasanya seperti kamu ada di sana.</div>
+      </div>
+      <div class="memory-card" onclick="toggleMemory(this, 5)">
+        <span class="memory-icon">🔮</span>
+        <div class="memory-label">Masa Depan</div>
+        <div class="memory-text">Aku tidak tahu apa yang akan datang, tapi kalau kamu ada di sana, rasanya lebih dari cukup untuk aku hadapi.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: QUESTION -->
+  <div class="card question-wrap" id="cardQuestion" style="animation-delay:0.6s">
+    <div class="step-badge">Langkah 5 — Boleh Aku Tanya?</div>
+    <p class="section-title">💬 Untuk Rahayu</p>
+    <div class="question-box">
+      <p class="q-text" id="qText">Kalau kamu boleh pilih satu hal yang paling kamu suka dari kita berdua, apa itu?</p>
+      <div class="q-options" id="qOptions">
+        <button class="q-btn" onclick="chooseAnswer(this, 0)">💬 Obrolannya</button>
+        <button class="q-btn" onclick="chooseAnswer(this, 1)">😂 Ketawanya</button>
+        <button class="q-btn" onclick="chooseAnswer(this, 2)">🤝 Saling ngerti</button>
+        <button class="q-btn" onclick="chooseAnswer(this, 3)">🌙 Ketenangan</button>
+      </div>
+      <p id="qAnswer"></p>
+    </div>
+  </div>
+
+  <!-- STEP 6: REACTIONS -->
+  <div class="card reactions-wrap" id="cardReactions" style="animation-delay:0.7s">
+    <div class="step-badge">Langkah 6 — Reaksimu</div>
+    <p class="section-title">✨ Gimana Perasaanmu?</p>
+    <div class="rg" id="reactGrid">
+      <button class="rbtn" onclick="react(this,'😊','Senyum kamu yang paling aku tunggu-tunggu.')">
+        <span class="ico">😊</span> Senang <span class="rcount">0</span>
+      </button>
+      <button class="rbtn" onclick="react(this,'🥺','Rasanya menyentuh banget, makasih ya.')">
+        <span class="ico">🥺</span> Terharu <span class="rcount">0</span>
+      </button>
+      <button class="rbtn" onclick="react(this,'😍','Kamu memang spesial, sungguh.')">
+        <span class="ico">😍</span> Kagum <span class="rcount">0</span>
+      </button>
+      <button class="rbtn" onclick="react(this,'💕','Perasaan itu selalu ada.')">
+        <span class="ico">💕</span> Sayang <span class="rcount">0</span>
+      </button>
+      <button class="rbtn" onclick="react(this,'🌸','Seperti musim semi, selalu menyegarkan.')">
+        <span class="ico">🌸</span> Indah <span class="rcount">0</span>
+      </button>
+      <button class="rbtn" onclick="react(this,'🫂','Semoga kamu tahu betapa berharganya kamu.')">
+        <span class="ico">🫂</span> Hangat <span class="rcount">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 7: GAME -->
+  <div class="card game-wrap" id="cardGame" style="animation-delay:0.8s">
+    <div class="step-badge">Langkah 7 — Main Dulu!</div>
+    <div class="game-header">
+      <span class="game-title-text">🎮 Tangkap Perasaanku</span>
+      <span class="game-meta">Skor: <span id="scoreNum">0</span> | ⏱ <span id="timer">30</span>s</span>
+    </div>
+    <canvas id="gameCanvas"></canvas>
+    <div class="game-controls">
+      <button class="gbtn" onclick="startGame()">▶ Mulai</button>
+      <button class="gbtn" onclick="resetGame()">↺ Reset</button>
+      <button class="gbtn mode-btn" onclick="toggleHardMode()">⚡ Mode Susah</button>
+    </div>
+    <p class="game-hint">
+      Gerakkan mouse / sentuh untuk menangkap hati 💖 = 1pt · ⭐ = 5pt · 💣 hindari bom!
+      <br>Rekor terbaik: <span id="highScore">0</span> poin
+    </p>
+  </div>
+
+  <!-- STEP 8: COUNTDOWN -->
+  <div class="card countdown-wrap" id="cardCountdown" style="animation-delay:0.9s">
+    <div class="step-badge">Langkah 8 — Hitung Maju</div>
+    <p class="section-title">⏳ Sudah berapa lama kita saling kenal?</p>
+    <div class="countdown-display" id="countdownDisplay">
+      <div class="cd-block"><div class="cd-num" id="cdDays">-</div><div class="cd-lbl">Hari</div></div>
+      <div class="cd-block"><div class="cd-num" id="cdHours">-</div><div class="cd-lbl">Jam</div></div>
+      <div class="cd-block"><div class="cd-num" id="cdMins">-</div><div class="cd-lbl">Menit</div></div>
+      <div class="cd-block"><div class="cd-num" id="cdSecs">-</div><div class="cd-lbl">Detik</div></div>
+    </div>
+    <p style="text-align:center; color:var(--muted); font-size:0.76rem; margin-top:14px; letter-spacing:.5px;">
+      Dihitung sejak 1 Januari 2024 · sesuaikan di kode kalau perlu
+    </p>
+  </div>
+
+  <!-- STEP 9: SEND -->
+  <div class="card send-wrap" id="cardSend" style="animation-delay:1s">
+    <div class="step-badge">Langkah 9 — Kirim Suratnya! 🎉</div>
+    <p class="section-title">📤 Bagikan Surat Ini</p>
+    <div class="send-inner">
+      <p class="send-desc">
+        Setelah melewati semua langkah ini bersama-sama, saatnya perasaan ini sampai ke orang yang tepat.
+        Pilih siapa yang akan menerima surat ini.
+      </p>
+      <div class="contact-select-area">
+        <p class="contact-label">Pilih kontak :</p>
+        <div class="contact-list" id="contactList">
+          <div class="contact-chip" onclick="selectContact(this, '+628xxx', 'Rahayu')">💖 Rahayu</div>
+          <div class="contact-chip" onclick="selectContact(this, '+628yyy', 'Sayang')">🌸 Sayang</div>
+          <div class="contact-chip" onclick="selectContact(this, '+628zzz', 'Kamu')">✨ Kamu</div>
+          <div class="contact-chip" onclick="selectContact(this, 'custom', 'Tulis sendiri')">📝 Tulis Sendiri</div>
+        </div>
+        <div id="customNumberWrap" style="display:none; margin-top:12px; text-align:center;">
+          <input id="customNumber" type="tel" placeholder="Masukkan nomor WA (62xxx...)"
+            style="background:rgba(255,255,255,.07); border:1px solid rgba(232,99,122,.3); border-radius:10px; padding:10px 16px; color:white; font-family:'DM Sans',sans-serif; font-size:0.9rem; width:100%; max-width:300px; outline:none;">
+        </div>
+      </div>
+      <button class="send-btn-big" onclick="sendLetter()">
+        💌 Kirim Sekarang
+      </button>
+      <div class="send-result" id="sendResult"></div>
+    </div>
+  </div>
+
+  <div class="footer">DIBUAT DENGAN 💖 · KHUSUS UNTUK RAHAYU</div>
+</div>
+
+<!-- ============ STARS ============ -->
+<script>
+(function() {
+  for (let i = 0; i < 90; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz = Math.random()*2.5+0.8;
+    s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;animation-delay:${Math.random()*6}s`;
+    document.body.appendChild(s);
+  }
+})();
+</script>
+
+<!-- ============ BG CANVAS ============ -->
+<script>
+const bgCv = document.getElementById('bgCanvas');
+const bgCx = bgCv.getContext('2d');
+let bgParticles = [];
+
+function resizeBg() { bgCv.width=innerWidth; bgCv.height=innerHeight; }
+resizeBg(); addEventListener('resize', resizeBg);
+
+for (let i=0;i<35;i++) bgParticles.push({
+  x:Math.random()*innerWidth, y:Math.random()*innerHeight,
+  vx:(Math.random()-.5)*.3, vy:-Math.random()*.4-.15,
+  sz:Math.random()*12+5, op:Math.random()*.12+.04,
+  ch:['💗','💕','✨','🌸','⭐','💫'][Math.floor(Math.random()*6)],
+  rot:Math.random()*Math.PI*2, rs:(Math.random()-.5)*.015, life:Math.random()
+});
+
+(function animBg() {
+  bgCx.clearRect(0,0,bgCv.width,bgCv.height);
+  bgParticles.forEach(p=>{
+    p.x+=p.vx; p.y+=p.vy; p.rot+=p.rs; p.life+=.002;
+    if(p.y<-30){p.y=bgCv.height+30;p.x=Math.random()*bgCv.width;}
+    bgCx.save();
+    bgCx.globalAlpha=p.op*(0.5+0.5*Math.sin(p.life*2));
+    bgCx.translate(p.x,p.y); bgCx.rotate(p.rot);
+    bgCx.font=`${p.sz}px serif`;
+    bgCx.textAlign='center'; bgCx.textBaseline='middle';
+    bgCx.fillText(p.ch,0,0);
+    bgCx.restore();
+  });
+  requestAnimationFrame(animBg);
+})();
+</script>
+
+<!-- ============ GUIDE ARROW ============ -->
+<script>
+const guideArrow = document.getElementById('guideArrow');
+const guideLabel = document.getElementById('guideLabel');
+
+const guideSteps = [
+  { id: 'cardHeart',     label: 'Mulai — klik hati ini! 💖' },
+  { id: 'cardMeter',     label: 'Lihat love meter di sini 💗' },
+  { id: 'cardLetter',    label: 'Buka surat rahasianya 📜' },
+  { id: 'cardGallery',   label: 'Klik momen-momen kita 🌸' },
+  { id: 'cardQuestion',  label: 'Jawab pertanyaannya ya 💬' },
+  { id: 'cardReactions', label: 'Pilih reaksimu ✨' },
+  { id: 'cardGame',      label: 'Main game dulu! 🎮' },
+  { id: 'cardCountdown', label: 'Lihat hitungan waktu ⏳' },
+  { id: 'cardSend',      label: 'Kirim suratnya sekarang! 💌' },
+];
+
+let currentStep = 0;
+let guideTimeout;
+
+function showGuideFor(stepIdx) {
+  if (stepIdx >= guideSteps.length) {
+    guideArrow.classList.remove('visible');
+    return;
+  }
+  const step = guideSteps[stepIdx];
+  const el = document.getElementById(step.id);
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  const arrowH = 80;
+  const top = window.scrollY + rect.top - arrowH - 16;
+  const left = window.scrollX + rect.left + rect.width/2;
+
+  guideLabel.textContent = step.label;
+  guideArrow.style.left = left + 'px';
+  guideArrow.style.top = top + 'px';
+  guideArrow.style.transform = 'translateX(-50%)';
+  guideArrow.classList.add('visible');
+}
+
+// show guide on step complete
+function advanceGuide(stepIdx) {
+  currentStep = Math.max(currentStep, stepIdx + 1);
+  clearTimeout(guideTimeout);
+  guideTimeout = setTimeout(() => {
+    showGuideFor(currentStep);
+    // scroll to next card
+    const next = guideSteps[currentStep];
+    if (next) {
+      const el = document.getElementById(next.id);
+      if (el) el.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+  }, 600);
+  updateProgress();
+}
+
+function updateProgress() {
+  const pct = Math.min(100, (currentStep / guideSteps.length) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// Show first guide after short delay
+setTimeout(() => showGuideFor(0), 1800);
+</script>
+
+<!-- ============ FIREWORK & HEARTS ============ -->
+<script>
+function spawnHearts(x, y, count) {
+  const emojis = ['💖','💗','💕','💝','❤️','🌸','✨'];
+  for (let i=0;i<count;i++){
+    const h = document.createElement('div');
+    h.className='float-heart';
+    h.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    h.style.left=(x+(Math.random()-.5)*60)+'px';
+    h.style.top=(y-10)+'px';
+    h.style.fontSize=(1+Math.random())+'rem';
+    h.style.animationDuration=(1.4+Math.random())+'s';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),3000);
+  }
+}
+
+function firework(x, y) {
+  const colors=['#e8637a','#d4af6b','#f4a5b5','#9c27b0','#00bcd4','#fff'];
+  for(let i=0;i<18;i++){
+    const s=document.createElement('div');
+    s.className='spark';
+    const angle=(i/18)*Math.PI*2;
+    const dist=50+Math.random()*60;
+    s.style.cssText=`left:${x}px;top:${y}px;background:${colors[Math.floor(Math.random()*colors.length)]};--dx:${Math.cos(angle)*dist}px;--dy:${Math.sin(angle)*dist}px;--dur:${.5+Math.random()*.4}s`;
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),1200);
+  }
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('#app') && !e.target.closest('#musicBtn')) return;
+  if (['bigHeart'].includes(e.target.id) || e.target.closest('.rbtn') || e.target.closest('#gameCanvas') || e.target.closest('.contact-chip') || e.target.closest('.q-btn') || e.target.closest('.memory-card')) return;
+  spawnHearts(e.clientX, e.clientY, 2);
+});
+</script>
+
+<!-- ============ HEART + METER ============ -->
+<script>
+let loveLevel = 0;
+const loveMessages = [
+  '',
+  'Ada sesuatu yang terasa berbeda...',
+  'Rasanya seperti ada yang dicari.',
+  'Hangat, pelan-pelan tumbuh di dalam dada.',
+  'Kamu ada di sudut pikiranku.',
+  'Setiap hari ada satu nama yang teringat.',
+  'Perasaan ini nyata, bukan sekadar khayalan.',
+  'Kamu adalah bagian dari hari-hariku.',
+  'Sulit diungkapkan, tapi kamu pasti merasakannya.',
+  'Sepenuh hati, aku menyayangimu.',
+  '♾️ Rahayu, rasa ini tidak akan pergi ♾️'
+];
+
+let heartDone = false;
+
+function heartClick(e) {
+  if (loveLevel < 10) loveLevel++;
+  const bar = document.getElementById('loveBar');
+  const txt = document.getElementById('loveMeterText');
+  bar.style.width = (loveLevel*10)+'%';
+  txt.textContent = loveMessages[loveLevel];
+  spawnHearts(e.clientX, e.clientY, 6);
+  firework(e.clientX, e.clientY);
+  if (loveLevel === 10 && !heartDone) {
+    heartDone = true;
+    document.getElementById('bigHeart').textContent = '💞';
+    showToast('💖 Rahayu, perasaan ini nyata dan tulus untukmu.');
+    advanceGuide(0); // done step 1 → go to step 2
+  }
+  if (loveLevel === 5) advanceGuide(1); // prompt to letter after halfway
+}
+</script>
+
+<!-- ============ LOVE LETTER ============ -->
+<script>
+const letterParagraphs = [
+  { id:'lp1', text:'Rahayu,' },
+  { id:'lp2', text:'Mungkin kamu tidak tahu seberapa sering namamu ada di pikiranku. Bukan karena aku memaksanya, tapi karena entah bagaimana kamu sudah jadi bagian dari hari-hari yang kulalui.' },
+  { id:'lp3', text:'Ada banyak hal dari kamu yang tanpa sadar aku perhatikan. Cara kamu bicara ketika kamu bersemangat. Cara kamu diam ketika sedang memikirkan sesuatu. Semuanya ada, dan semuanya terasa berarti.' },
+  { id:'lp4', text:'Aku tidak pandai merangkai kata-kata indah. Tapi yang aku tahu dengan pasti adalah ini: aku ingin terus ada, mendukungmu, dan menjadi orang yang bisa kamu andalkan kapanpun kamu butuhkan.' },
+  { id:'lp5', text:'Jadi, kalau kamu membaca ini, aku harap kamu tahu bahwa kamu tidak sendiri. Ada seseorang yang sungguh-sungguh menyayangimu.' },
+  { id:'lp6', text:'Dengan tulus, seseorang yang selalu memikirkanmu 💖' },
+];
+
+let letterOpened = false;
+
+function typeText(el, text, speed, cb) {
+  let i=0; el.textContent='';
+  const iv=setInterval(()=>{
+    el.textContent+=text[i++];
+    if(i>=text.length){clearInterval(iv);if(cb)cb();}
+  }, speed);
+}
+
+function revealLetter() {
+  if(letterOpened) return;
+  letterOpened=true;
+  document.getElementById('letterReveal').style.display='none';
+  const lc=document.getElementById('letterContent');
+  lc.style.display='block';
+  let idx=0;
+  function typeNext() {
+    if(idx>=letterParagraphs.length){
+      showToast('Surat sudah terkirim sampai ke hatimu 💌');
+      advanceGuide(2); // go to step 3 → gallery
+      return;
+    }
+    const l=letterParagraphs[idx++];
+    typeText(document.getElementById(l.id), l.text, 28, typeNext);
+  }
+  typeNext();
+}
+</script>
+
+<!-- ============ MEMORY GALLERY ============ -->
+<script>
+let memoryClicks = 0;
+
+function toggleMemory(card, idx) {
+  const txt = card.querySelector('.memory-text');
+  const isOpen = card.classList.contains('open');
+  // close all
+  document.querySelectorAll('.memory-card').forEach(c => {
+    c.classList.remove('open');
+    c.querySelector('.memory-text').style.display='none';
+  });
+  if (!isOpen) {
+    card.classList.add('open');
+    txt.style.display='block';
+    spawnHearts(card.getBoundingClientRect().left+card.offsetWidth/2, card.getBoundingClientRect().top, 4);
+  }
+  memoryClicks++;
+  if (memoryClicks >= 3) advanceGuide(3); // step 3 → question
+}
+</script>
+
+<!-- ============ QUESTION ============ -->
+<script>
+const qAnswers = [
+  'Obrolan yang jujur memang selalu jadi pondasi yang kuat. 💬',
+  'Tawa yang sama itu artinya kita ngerti satu sama lain. 😂',
+  'Saling ngerti tanpa harus banyak dijelaskan — itu langka banget. 🤝',
+  'Ada ketenangan di antara kita, dan itu lebih dari sekadar nyaman. 🌙'
+];
+
+let answered = false;
+
+function chooseAnswer(btn, idx) {
+  document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('chosen'));
+  btn.classList.add('chosen');
+  document.getElementById('qAnswer').textContent = qAnswers[idx];
+  spawnHearts(btn.getBoundingClientRect().left+btn.offsetWidth/2, btn.getBoundingClientRect().top, 5);
+  if (!answered) {
+    answered = true;
+    advanceGuide(4); // step 4 → reactions
+  }
+}
+</script>
+
+<!-- ============ REACTIONS ============ -->
+<script>
+let reactCount = 0;
+
+function react(btn, emoji, msg) {
+  const count = btn.querySelector('.rcount');
+  count.textContent = parseInt(count.textContent)+1;
+  btn.classList.add('active');
+  showToast(emoji+' '+msg);
+  spawnHearts(btn.getBoundingClientRect().left+btn.offsetWidth/2, btn.getBoundingClientRect().top, 4);
+  reactCount++;
+  if (reactCount >= 2) advanceGuide(5); // step 5 → game
+}
+</script>
+
+<!-- ============ MINI GAME (UPGRADED) ============ -->
+<script>
+const gc = document.getElementById('gameCanvas');
+const gctx = gc.getContext('2d');
+let gameRunning=false, gameScore=0, gameTime=30, hardMode=false;
+let gameObjs=[], gameTimerID=null, animID=null;
+let mouseX=0, basketX=0;
+let highScore = 0;
+let gameCompleted = false;
+
+function resizeGame(){gc.width=gc.offsetWidth;gc.height=280;}
+resizeGame(); addEventListener('resize',resizeGame);
+
+gc.addEventListener('mousemove',e=>{const r=gc.getBoundingClientRect();mouseX=e.clientX-r.left;});
+gc.addEventListener('touchmove',e=>{e.preventDefault();const r=gc.getBoundingClientRect();mouseX=e.touches[0].clientX-r.left;},{passive:false});
+
+function toggleHardMode(){
+  hardMode=!hardMode;
+  const btn=event.target;
+  btn.textContent=hardMode?'🔥 Mode Normal':'⚡ Mode Susah';
+  showToast(hardMode?'⚡ Mode susah aktif! Hindari 💣!':'Normal mode diaktifkan.');
+}
+
+function startGame(){
+  if(gameRunning) return;
+  gameRunning=true; gameScore=0; gameTime=hardMode?20:30;
+  gameObjs=[]; basketX=gc.width/2;
+  mouseX=gc.width/2;
+  document.getElementById('scoreNum').textContent=0;
+  document.getElementById('timer').textContent=gameTime;
+
+  gameTimerID=setInterval(()=>{
+    gameTime--;
+    document.getElementById('timer').textContent=gameTime;
+    if(gameTime<=0) endGame();
+  },1000);
+
+  const spawnRate = hardMode ? 550 : 750;
+  const spawnIv = setInterval(()=>{
+    if(!gameRunning){clearInterval(spawnIv);return;}
+    const r=Math.random();
+    const isBomb = hardMode && r < 0.18;
+    const isStar = !isBomb && r < 0.1;
+    const isDouble = !isBomb && !isStar && r < 0.07;
+    gameObjs.push({
+      x:30+Math.random()*(gc.width-60), y:-20,
+      vy:(hardMode?2.2:1.5)+Math.random()*(hardMode?3:2),
+      sz:18+Math.random()*16,
+      char: isBomb?'💣': isStar?'⭐': isDouble?'💞':'💖',
+      rot:0, rs:(Math.random()-.5)*.06,
+      pts: isBomb?-3: isStar?5: isDouble?3:1,
+      isBomb
+    });
+  }, spawnRate);
+
+  animID=requestAnimationFrame(gameLoop);
+}
+
+function gameLoop(){
+  if(!gameRunning) return;
+  gctx.clearRect(0,0,gc.width,gc.height);
+
+  basketX+=(mouseX-basketX)*.18;
+  const bw=80,bh=28,bx=basketX-bw/2,by=gc.height-bh-8;
+
+  // draw basket
+  gctx.save();
+  gctx.fillStyle='rgba(232,99,122,0.25)';
+  gctx.strokeStyle='rgba(232,99,122,0.8)';
+  gctx.lineWidth=2;
+  gctx.beginPath(); gctx.roundRect(bx,by,bw,bh,8);
+  gctx.fill(); gctx.stroke();
+  gctx.font='bold 13px DM Sans';
+  gctx.fillStyle='#f4a5b5';
+  gctx.textAlign='center'; gctx.textBaseline='middle';
+  gctx.fillText('💝 Rahayu',basketX,by+bh/2);
+  gctx.restore();
+
+  // hint text
+  gctx.font='11px DM Sans';
+  gctx.fillStyle='rgba(244,165,181,.45)';
+  gctx.textAlign='left';
+  gctx.fillText('💖=1pt ⭐=5pt 💞=3pt'+(hardMode?' 💣=-3pt!':''),10,20);
+
+  gameObjs=gameObjs.filter(h=>{
+    h.y+=h.vy; h.rot+=h.rs;
+    const caught=h.y+h.sz/2>=by && h.y-h.sz/2<=by+bh && h.x>=bx && h.x<=bx+bw;
+    if(caught){
+      gameScore=Math.max(0,gameScore+h.pts);
+      document.getElementById('scoreNum').textContent=gameScore;
+      if(!h.isBomb) firework(gc.getBoundingClientRect().left+h.x,gc.getBoundingClientRect().top+h.y);
+      else { showToast('💣 Oops! -3 poin!'); }
+      return false;
+    }
+    if(h.y>gc.height+30) return false;
+    gctx.save();
+    gctx.translate(h.x,h.y); gctx.rotate(h.rot);
+    gctx.font=`${h.sz}px serif`;
+    gctx.textAlign='center'; gctx.textBaseline='middle';
+    gctx.fillText(h.char,0,0);
+    gctx.restore();
+    return true;
+  });
+
+  animID=requestAnimationFrame(gameLoop);
+}
+
+function endGame(){
+  gameRunning=false;
+  clearInterval(gameTimerID); cancelAnimationFrame(animID);
+  if(gameScore>highScore){
+    highScore=gameScore;
+    document.getElementById('highScore').textContent=highScore;
+  }
+  gctx.clearRect(0,0,gc.width,gc.height);
+  gctx.fillStyle='rgba(232,99,122,.1)'; gctx.fillRect(0,0,gc.width,gc.height);
+  gctx.font='bold 26px Cormorant Garamond'; gctx.fillStyle='#d4af6b';
+  gctx.textAlign='center';
+  gctx.fillText('🎉 Waktu Habis! 🎉',gc.width/2,gc.height/2-32);
+  gctx.font='17px DM Sans'; gctx.fillStyle='#f4a5b5';
+  gctx.fillText(`Skor: ${gameScore} poin`,gc.width/2,gc.height/2+8);
+  const msg=gameScore>=40?'Luar biasa! Kamu memang yang terbaik 🌟':
+            gameScore>=20?'Bagus! Aku bangga sama kamu 💕':
+                          'Lumayan! Coba lagi dan raih yang terbaik 😊';
+  gctx.font='13px DM Sans'; gctx.fillStyle='rgba(244,165,181,.8)';
+  gctx.fillText(msg,gc.width/2,gc.height/2+36);
+  showToast('Game selesai! Skor: '+gameScore+' 🎉');
+  if(!gameCompleted){ gameCompleted=true; advanceGuide(6); }
+}
+
+function resetGame(){
+  gameRunning=false;
+  clearInterval(gameTimerID); cancelAnimationFrame(animID);
+  gameScore=0; gameTime=hardMode?20:30;
+  document.getElementById('scoreNum').textContent=0;
+  document.getElementById('timer').textContent=gameTime;
+  gctx.clearRect(0,0,gc.width,gc.height);
+  gctx.font='15px DM Sans'; gctx.fillStyle='rgba(244,165,181,.55)';
+  gctx.textAlign='center';
+  gctx.fillText('Klik "Mulai" untuk bermain!',gc.width/2,gc.height/2);
+}
+resetGame();
+</script>
+
+<!-- ============ COUNTDOWN ============ -->
+<script>
+const startDate = new Date('2024-01-01T00:00:00');
+
+function updateCountdown(){
+  const now=new Date();
+  const diff=now-startDate;
+  if(diff<0){
+    document.getElementById('cdDays').textContent='?';
+    return;
+  }
+  const totalSecs=Math.floor(diff/1000);
+  const days=Math.floor(totalSecs/86400);
+  const hours=Math.floor((totalSecs%86400)/3600);
+  const mins=Math.floor((totalSecs%3600)/60);
+  const secs=totalSecs%60;
+  document.getElementById('cdDays').textContent=days;
+  document.getElementById('cdHours').textContent=String(hours).padStart(2,'0');
+  document.getElementById('cdMins').textContent=String(mins).padStart(2,'0');
+  document.getElementById('cdSecs').textContent=String(secs).padStart(2,'0');
+}
+updateCountdown(); setInterval(updateCountdown,1000);
+
+// Advance guide once seen
+const cdObs = new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){ advanceGuide(7); cdObs.disconnect(); }
+},{threshold:0.5});
+cdObs.observe(document.getElementById('cardCountdown'));
+</script>
+
+<!-- ============ CONTACT & SEND ============ -->
+<script>
+let selectedContact = null;
+let selectedName = null;
+
+function selectContact(chip, number, name) {
+  document.querySelectorAll('.contact-chip').forEach(c=>c.classList.remove('selected'));
+  chip.classList.add('selected');
+  selectedContact = number;
+  selectedName = name;
+
+  const customWrap = document.getElementById('customNumberWrap');
+  if(number === 'custom') {
+    customWrap.style.display='block';
+    selectedContact = null;
+  } else {
+    customWrap.style.display='none';
+  }
+
+  spawnHearts(chip.getBoundingClientRect().left+chip.offsetWidth/2, chip.getBoundingClientRect().top, 4);
+}
+
+const letterSummary = encodeURIComponent(
+  `Hei Rahayu 💖\n\nAda sesuatu yang ingin aku sampaikan, dan aku sudah lama menyimpannya.\n\nKamu mungkin tidak tahu seberapa berarti kehadiranmu buatku. Setiap hari, ada momen kecil yang selalu mengingatkanku padamu — dan itu bukan sesuatu yang aku paksa, tapi memang sudah begitu adanya.\n\nAku ingin kamu tahu: aku menyayangimu, dengan tulus dan tanpa syarat.\n\nDengan sepenuh hati 💌`
+);
+
+function sendLetter(){
+  let number = selectedContact;
+
+  if(number === null && document.getElementById('customNumberWrap').style.display!=='none'){
+    number = document.getElementById('customNumber').value.replace(/\D/g,'');
+    if(!number){ showToast('Masukkan nomor terlebih dahulu ya 📞'); return; }
+    if(!number.startsWith('62')) number='62'+number.replace(/^0/,'');
+  }
+
+  if(!number){
+    showToast('Pilih kontak dulu ya 💌'); return;
+  }
+
+  const waUrl = `https://wa.me/${number}?text=${letterSummary}`;
+  window.open(waUrl, '_blank');
+
+  document.getElementById('sendResult').style.display='block';
+  document.getElementById('sendResult').textContent = '✅ WhatsApp dibuka! Kirim pesannya dengan hati yang tulus 💌';
+
+  for(let i=0;i<20;i++){
+    setTimeout(()=>spawnHearts(innerWidth/2, innerHeight/2, 5),i*120);
+    setTimeout(()=>firework(Math.random()*innerWidth, Math.random()*innerHeight*.7),i*150+300);
+  }
+
+  setTimeout(()=>{
+    document.getElementById('completionOverlay').style.display='flex';
+  }, 1800);
+
+  advanceGuide(8);
+}
+
+let waUrl_global='', smsUrl_global='';
+
+function sendViaWhatsApp(){
+  let number = selectedContact;
+  if(!number || number==='custom'){
+    const v = document.getElementById('customNumber').value.replace(/\D/g,'');
+    number = v.startsWith('62')?v:'62'+v.replace(/^0/,'');
+  }
+  window.open(`https://wa.me/${number}?text=${letterSummary}`,'_blank');
+}
+
+function sendViaSMS(){
+  window.open(`sms:?body=${letterSummary}`,'_blank');
+}
+
+function closeCompletion(){
+  document.getElementById('completionOverlay').style.display='none';
+}
+</script>
+
+<!-- ============ TOAST ============ -->
+<script>
+let toastT;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),3500);
+}
+</script>
+
+<!-- ============ MUSIC ============ -->
+<script>
+let audioCtx=null, musicPlaying=false, musicNodes=[], musicLoopTimeout=null;
+
+const melody=[
+  [392,.4],[440,.4],[494,.4],[523,.8],
+  [494,.4],[440,.4],[392,.8],
+  [349,.4],[392,.4],[440,.4],[494,.8],
+  [440,.4],[392,.4],[349,.8],
+  [523,.4],[587,.4],[659,.4],[698,.8],
+  [659,.4],[587,.4],[523,.8],
+  [494,.4],[523,.4],[587,.4],[659,.8],
+  [587,.4],[523,.4],[494,.8],
+  [440,.4],[494,.4],[523,.4],[587,.8],
+  [523,.4],[494,.4],[440,.8],
+  [392,.4],[440,.4],[494,.4],[523,.8],
+  [494,.4],[440,.4],[392,1.2],
+];
+
+function startMusic(){
+  if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  let t=audioCtx.currentTime+0.1;
+  function playLoop(){
+    if(!musicPlaying) return;
+    melody.forEach(([freq,dur])=>{
+      // main melody
+      const osc=audioCtx.createOscillator();
+      const gain=audioCtx.createGain();
+      osc.type='sine'; osc.frequency.value=freq;
+      gain.gain.setValueAtTime(0,t);
+      gain.gain.linearRampToValueAtTime(0.12,t+0.04);
+      gain.gain.linearRampToValueAtTime(0,t+dur-0.04);
+      osc.connect(gain); gain.connect(audioCtx.destination);
+      osc.start(t); osc.stop(t+dur);
+      // harmony (5th below)
+      const osc2=audioCtx.createOscillator();
+      const gain2=audioCtx.createGain();
+      osc2.type='triangle'; osc2.frequency.value=freq*0.75;
+      gain2.gain.setValueAtTime(0,t);
+      gain2.gain.linearRampToValueAtTime(0.05,t+0.04);
+      gain2.gain.linearRampToValueAtTime(0,t+dur-0.04);
+      osc2.connect(gain2); gain2.connect(audioCtx.destination);
+      osc2.start(t); osc2.stop(t+dur);
+      musicNodes.push(osc,osc2);
+      t+=dur;
+    });
+    musicLoopTimeout=setTimeout(()=>{if(musicPlaying)playLoop();},(t-audioCtx.currentTime-0.5)*1000);
+  }
+  playLoop();
+}
+
+function stopMusic(){
+  musicNodes.forEach(n=>{try{n.stop();}catch(e){}});
+  musicNodes=[];
+  clearTimeout(musicLoopTimeout);
+}
+
+function toggleMusic(){
+  musicPlaying=!musicPlaying;
+  const lbl=document.getElementById('musicLabel');
+  if(musicPlaying){
+    if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state==='suspended') audioCtx.resume();
+    startMusic();
+    lbl.textContent='Stop Musik';
+  } else {
+    stopMusic();
+    lbl.textContent='Putar Musik';
+  }
+}
+
+// Auto-play on first interaction
+let autoPlayDone=false;
+document.addEventListener('click',()=>{
+  if(autoPlayDone) return;
+  autoPlayDone=true;
+  if(!musicPlaying){
+    musicPlaying=true;
+    if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state==='suspended') audioCtx.resume();
+    startMusic();
+    document.getElementById('musicLabel').textContent='Stop Musik';
+  }
+},{once:true});
+</script>
+
+</body>
+</html>
