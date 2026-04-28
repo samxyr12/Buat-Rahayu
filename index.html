@@ -706,7 +706,7 @@ body {
       <div class="cd-block"><div class="cd-num" id="cdSecs">-</div><div class="cd-lbl">Detik</div></div>
     </div>
     <p style="text-align:center; color:var(--muted); font-size:0.76rem; margin-top:14px; letter-spacing:.5px;">
-      Dihitung sejak 1 Januari 2024 · sesuaikan di kode kalau perlu
+      Dihitung sejak 14 Februari 2025 · hari yang tidak terlupakan 💖
     </p>
   </div>
 
@@ -722,9 +722,7 @@ body {
       <div class="contact-select-area">
         <p class="contact-label">Pilih kontak :</p>
         <div class="contact-list" id="contactList">
-          <div class="contact-chip" onclick="selectContact(this, '+628xxx', 'Rahayu')">💖 Rahayu</div>
-          <div class="contact-chip" onclick="selectContact(this, '+628yyy', 'Sayang')">🌸 Sayang</div>
-          <div class="contact-chip" onclick="selectContact(this, '+628zzz', 'Kamu')">✨ Kamu</div>
+          <div class="contact-chip selected" onclick="selectContact(this, '6289526335486', 'Rahayu')">💖 Rahayu</div>
           <div class="contact-chip" onclick="selectContact(this, 'custom', 'Tulis sendiri')">📝 Tulis Sendiri</div>
         </div>
         <div id="customNumberWrap" style="display:none; margin-top:12px; text-align:center;">
@@ -1175,7 +1173,7 @@ resetGame();
 
 <!-- ============ COUNTDOWN ============ -->
 <script>
-const startDate = new Date('2024-01-01T00:00:00');
+const startDate = new Date('2025-02-14T00:00:00');
 
 function updateCountdown(){
   const now=new Date();
@@ -1205,8 +1203,8 @@ cdObs.observe(document.getElementById('cardCountdown'));
 
 <!-- ============ CONTACT & SEND ============ -->
 <script>
-let selectedContact = null;
-let selectedName = null;
+let selectedContact = '6289526335486';
+let selectedName = 'Rahayu';
 
 function selectContact(chip, number, name) {
   document.querySelectorAll('.contact-chip').forEach(c=>c.classList.remove('selected'));
